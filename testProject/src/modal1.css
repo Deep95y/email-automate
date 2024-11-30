@@ -1,0 +1,104 @@
+/* Outer container to hold all columns */
+
+.main {
+    margin: auto;
+    border-radius: 0.5rem;
+    background: #efefef;
+    height: 500px;
+    width: 800px;
+    box-sizing: border-box;
+    margin-top: 4.5rem;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .header {
+    height: 2.5rem;
+    border-bottom: 1px solid #ccc;
+    width: 800px;
+    border-radius: 0.5rem;
+   
+  }
+  
+  .close {
+    cursor: pointer;
+    height: 1.5rem;
+    width: 1.5rem;
+    border: 2px solid red;
+    border-radius: 0.3rem;
+    text-align: center;
+    margin-top: 0.5rem;
+    color: red;
+    margin-left: 47.5rem;
+  }
+  
+  .title {
+    font-weight: bold;
+    text-align: left;
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+  }
+  
+  .description {
+    margin-left: 1rem;
+  }
+  
+  .divider {
+    height: 0.08rem;
+    width: 50rem;
+    background: #ccc;
+  }
+  
+  .sources-title {
+    font-weight: bold;
+    text-align: left;
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+  }
+  
+  
+  .container {
+    display: flex;
+    justify-content: space-around; /* Distributes columns evenly */
+  }
+  
+  /* Each column */
+  .column {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 25px; /* Space between items */
+    width: 370px; /* Adjust column width */
+    margin-top: 1rem;
+  }
+  
+  /* Each box inside the column */
+  .box {
+    padding: 15px;
+    /* background-color: #f0f0f0; */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: transform 0.3s ease box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .box:hover{
+    transition: translateY(-10px) scale(1.05);
+    box-shadow: 0 10px 16px rgba(0, 0, 0, 0.2);
+    background-color: #e3e3e3;
+  }
+  
+  @media (max-width: 600px) {
+    .container {
+      flex-wrap: wrap; /* Allow columns to wrap to the next row */
+      justify-content: center;
+    }
+  
+    .column {
+      width: 100%; /* Make columns take full width on small screens */
+    }
+  }
+  

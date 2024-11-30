@@ -1,0 +1,108 @@
+/* Modal Overlay */
+  
+  /* Modal Container */
+  .modal {
+    background: #efefef;
+    width: 450px;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    position: relative;
+    height: 500px;
+    margin: auto;
+    margin-top: 3rem;
+  }
+  
+  /* Modal Header */
+  .modalHeader {
+
+    position: relative;
+  }
+  
+  .modal-title {
+  
+    font-size: 1.5rem;
+
+  }
+  
+  .modal-description {
+    font-size: 0.9rem;
+    color: gray;
+    
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  /* Modal Form */
+  .modal-form {
+    margin-top: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  
+  input,
+  select {
+
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  
+  /* Modal Footer */
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  .insert-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .insert-button:hover {
+    background-color: #0056b3;
+  }
+
+ .headBar {
+  height: 2.5rem;
+  border-bottom: 1px solid #ccc;
+ }
+  
+    
+  .close-icon {
+    cursor: pointer;
+    height: 1.5rem;
+    width: 1.5rem;
+    border: 2px solid red;
+    border-radius: 0.3rem;
+    text-align: center;
+    margin-left: 26rem;
+    margin-bottom: 0.5rem;
+    color: red;
+  }
