@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import Mainmodal from './modal1';
 import AddBlocksModal from './emailtemplate';
@@ -46,11 +46,38 @@ function Flow() {
   const [nodeId, setNodeId] = useState(2);
   const [showModal1, setShowModal1] = useState(false);
   const [showPlusModal, setShowPlusModal] = useState(false);
+  const [selectedList, setSelectedList] = useState([]);
+  const [selectedTemplate, setSelectedTemplate] = useState("");
+  const [delayTimeInNumber, setDelayTimeInNumber] = useState(0);
+  const [typeSelect, setTypeSelect] = useState("");
 
   const onConnect = (params) => setEdges((eds) => addEdge(params, eds));
 
-  const handleStandaloneClick = () => {
+  useEffect(() => {
+    const storedType = localStorage.getItem('selectedType');
+    if (storedType) {
+      setTypeSelect(JSON.parse(storedType));
+    }
 
+    const storedName = localStorage.getItem('selectedOptions');
+    if (storedName) {
+      setSelectedList(JSON.parse(storedName));
+    }
+
+    const storedTemplate = localStorage.getItem('result');
+    if (storedTemplate) {
+      const parsedTemplate = JSON.parse(storedTemplate);
+      setSelectedTemplate(parsedTemplate.selectedOption || "Default Email Template");
+    }
+
+    const storedTimeNumber = localStorage.getItem('data');
+    if (storedTimeNumber) {
+      const parsedData = JSON.parse(storedTimeNumber);
+      setDelayTimeInNumber(parsedData.waitFor || 0);
+    }
+  }, []);
+
+  const handleStandaloneClick = () => {
     setShowModal1(true);
     const newNodeId = `${nodeId}`;
     const plusNodeId = `${nodeId + 1}`;
@@ -60,7 +87,7 @@ function Flow() {
       data: {
         label: (
           <NodeContent
-            label={`New Box ${nodeId}`}
+            label={selectedList.join(", ") || "New Node"}
             nodeId={newNodeId}
             onEdit={handleEditNode}
             onDelete={handleDeleteNode}
@@ -102,22 +129,25 @@ function Flow() {
     setNodeId((id) => id + 2);
   };
 
-
-  const handlePlusClose = () => {
-    setShowPlusModal(false);
-  }
-
   const handlePlusClick = (id) => {
-
     setShowPlusModal(true);
     const newNodeId = `${nodeId}`;
+
+    let newLabel = "";
+    if (typeSelect === "email") {
+      newLabel = selectedTemplate || "Default Email Template";
+    } else if (typeSelect === "Wait") {
+      newLabel = `Wait: ${delayTimeInNumber}`;
+    } else {
+      newLabel = "New Node";
+    }
 
     const newNode = {
       id: newNodeId,
       data: {
         label: (
           <NodeContent
-            label={`New Box ${nodeId}`}
+            label={newLabel}
             nodeId={newNodeId}
             onEdit={handleEditNode}
             onDelete={handleDeleteNode}
@@ -194,49 +224,35 @@ function Flow() {
       padding: 0,
       border: "none",
       outline: "none",
-      position: "fixed",
-      boxSizing: "border-box",  
-      overflow: "hidden",
     },
   };
 
   Modal.setAppElement("#root");
 
-
-  const handleClose = () => {
-    setShowModal1(false);
-  };
-
   return (
     <>
-    <div style={{ height: 500 }}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        onNodeClick={handleNodeClick}
-        fitView
-        style={{ background: "#FAFAFA" }}
-      >
-        <MiniMap nodeColor={(node) => (node.id === "1" ? "red" : "blue")} />
-        <Controls />
-        <Background color="#888" gap={16} />
-      </ReactFlow>
-    </div>
+      <div style={{ height: 500 }}>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          onNodeClick={handleNodeClick}
+          fitView
+        >
+          <MiniMap nodeColor={(node) => (node.id === "1" ? "red" : "blue")} />
+          <Controls />
+          <Background color="#888" gap={16} />
+        </ReactFlow>
+      </div>
 
-    <Modal
-        isOpen={showModal1}
-        onRequestClose={handleClose}
-        style={customStyles}
-      >
-        {<Mainmodal handleClose={handleClose} />}
+      <Modal isOpen={showModal1} onRequestClose={() => setShowModal1(false)} style={customStyles}>
+        <Mainmodal handleClose={() => setShowModal1(false)} />
       </Modal>
 
-       {/* Plus Node Modal */}
-       <Modal isOpen={showPlusModal} onRequestClose={() => setShowPlusModal(false)} style={customStyles}>
-          {<AddBlocksModal handlePlusClose={handlePlusClose}/>}
+      <Modal isOpen={showPlusModal} onRequestClose={() => setShowPlusModal(false)} style={customStyles}>
+        <AddBlocksModal handlePlusClose={() => setShowPlusModal(false)} />
       </Modal>
     </>
   );

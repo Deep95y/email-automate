@@ -11,8 +11,7 @@ const Connection = async({selectedOptions, selectedOption, emailType, waitFor, w
             delayTimeInType:waitType,
             SendColdEmailAs: emailType,
         });
-        
-        return response.data;
+        console.log(response.data);
       
     }
     catch(error){

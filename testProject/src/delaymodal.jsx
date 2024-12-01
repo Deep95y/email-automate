@@ -5,16 +5,30 @@ import Connection from './connectioncreate';
 
 const WaitBlockModal = ({ handleWaitClose, handlePlusClose }) => {
   const [waitFor, setWaitFor] = useState("");
-  const [waitType, setWaitType] = useState("Days");
+  const [waitType, setWaitType] = useState("");
 
-  const handleInsert = () => {
+  // const data = { waitFor, waitType };
+  // console.log("Data inserted:", data);
+  
+  const handleInsert = async () => {
+
     const data = { waitFor, waitType };
     console.log("Data inserted:", data);
-    // Optionally pass data to parent here
-    handleCloseAll(); // Close both modals after inserting
-    Connection(waitFor, waitType )
-
+  
+    // Save both waitFor and waitType together in localStorage
+    localStorage.setItem('data', JSON.stringify(data));
+  
+    // Call Connection function
+    await Connection(waitFor, waitType);
+  
+    // Close both modals after inserting (if handleCloseAll is a function)
+    handleCloseAll();
+  
+    // Clear state after saving to localStorage and completing the function
+    // setWaitFor("");
+    // setWaitType("");
   };
+  
 
   const handleCloseAll = () => {
     if (typeof handleWaitClose === "function") {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./emailtemplate.css";
 import DropEmailModal from "./modal3";
 import Modal from "react-modal";
@@ -8,16 +8,25 @@ const AddBlocksModal = ({ handlePlusClose }) => {
   const [shownlockmodal, setShowblockmodal] = useState(false); // Cold Email Modal
   const [showdelayblock, setShowdelayblock] = useState(false); // Wait Block Modal
   const [isParentModalOpen, setIsParentModalOpen] = useState(true); // Parent Modal
+  const[selectedType, setSelectedType] = useState("");
+  console.log(selectedType);
 
   // Handle opening modals based on block name
   const handleOpenAll = (name) => {
     setIsParentModalOpen(false); // Close Parent Modal
     if (name === "Cold Email") {
       setShowblockmodal(true);
+      setSelectedType("email");
     } else if (name === "Wait") {
       setShowdelayblock(true);
+      setSelectedType("Wait");
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem('selectedType', JSON.stringify(selectedType));
+  }, [selectedType]);
+  
 
   // Handle Closing Modals
   const handleCloseblock = () => {

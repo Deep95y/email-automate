@@ -11,6 +11,8 @@ const DropEmailModal = ({handleCloseblock}) => {
 
   console.log(selectedOption);
   console.log(emailType);
+  const result = { selectedOption, emailType };
+  console.log(result);
 
   const options = [
     "AI Assisted - follow Up3",
@@ -31,12 +33,23 @@ const DropEmailModal = ({handleCloseblock}) => {
     setSelectedOption(option);
     setDropdownVisible(false);
   };
-
-  const handleInsert = () => {
-    const result = {selectedOption, emailType};
-     console.log(result);
-     Connection(selectedOption, emailType);
-  }
+  
+  const handleInsert = async () => {
+    console.log("asdfg");
+    const result = { selectedOption, emailType };
+    console.log(result);
+  
+    // Save both values as a single object in localStorage
+    localStorage.setItem('result', JSON.stringify(result));
+  
+    // Call Connection function (if it's async, consider awaiting it)
+    await Connection(selectedOption, emailType);
+  
+    // Clear state after saving to localStorage and completing the function
+    // setSelectedOption("");
+    // setEmailType("");
+  };
+  
 
   const handleButtonClose = () => {
     handleCloseblock();
